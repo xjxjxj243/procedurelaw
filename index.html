@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>民诉小测 · 随机模拟卷</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f0f3f8;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 20px 40px -10px rgba(0, 20, 40, 0.2);
+            padding: 2rem 2rem 2.5rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1e2b3c;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 3px solid #cbd5e1;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 small {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #5b6f87;
+            margin-left: auto;
+            background: #e9eef4;
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: #f8fafd;
+            padding: 1rem 1.5rem;
+            border-radius: 60px;
+            border: 1px solid #dde3ec;
+        }
+
+        .counter {
+            font-weight: 500;
+            color: #1e3a5f;
+            background: #e2e8f0;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            background: white;
+            border: 1px solid #b9c7da;
+            color: #1e3a5f;
+            padding: 0.6rem 1.3rem;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .btn-primary {
+            background: #1e3a5f;
+            border: 1px solid #1e3a5f;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0f2a45;
+        }
+
+        .btn:hover {
+            background: #e9eef4;
+            border-color: #8da1b9;
+        }
+
+        .btn-primary:hover {
+            background: #142b44;
+        }
+
+        .quiz-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.5rem 1.8rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+            transition: 0.1s;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .q-num {
+            background: #1e3a5f;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            min-width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .q-type {
+            background: #e9eef4;
+            color: #1e3a5f;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.3rem 0.9rem;
+            border-radius: 30px;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .q-text {
+            font-size: 1.08rem;
+            line-height: 1.5;
+            color: #0e1e30;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            margin: 0.8rem 0 0.5rem;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f9fcff;
+            padding: 0.7rem 1rem;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            transition: 0.1s;
+            cursor: pointer;
+        }
+
+        .option-item:hover {
+            background: #f0f6ff;
+            border-color: #b9c7da;
+        }
+
+        .option-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #1e3a5f;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .option-item label {
+            font-size: 1rem;
+            color: #1f2e3f;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .fill-input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            font-size: 1rem;
+            border: 1.5px solid #d0dae8;
+            border-radius: 14px;
+            font-family: inherit;
+            background: #f9fcff;
+            transition: 0.15s;
+            margin: 0.5rem 0 0.2rem;
+        }
+
+        .fill-input:focus {
+            outline: none;
+            border-color: #1e3a5f;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+        }
+
+        .answer-feedback {
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            padding: 0.6rem 1rem;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .answer-feedback.correct {
+            background: #e3f5e9;
+            color: #0f6e3f;
+            border-left: 4px solid #2b8a4e;
+            display: block;
+        }
+
+        .answer-feedback.wrong {
+            background: #ffeae9;
+            color: #b13e3e;
+            border-left: 4px solid #c0392b;
+            display: block;
+        }
+
+        .answer-feedback.neutral {
+            background: #edf2f9;
+            color: #2c3e50;
+            border-left: 4px solid #5b7a9a;
+            display: block;
+        }
+
+        .feedback-text {
+            font-weight: 500;
+        }
+
+        .correct-answer {
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .footer-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .result-panel {
+            background: #e9f0fa;
+            border-radius: 18px;
+            padding: 1.2rem 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            font-weight: 500;
+        }
+
+        .score-badge {
+            background: #1e3a5f;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .empty-msg {
+            text-align: center;
+            color: #6f7d8f;
+            padding: 3rem 1rem;
+            font-size: 1.1rem;
+            background: #f8fafd;
+            border-radius: 24px;
+            border: 1px dashed #bac8db;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px solid #e2e8f0;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .badge-info {
+            font-size: 0.8rem;
+            color: #5b6f87;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        @media (max-width: 650px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.5rem; flex-wrap: wrap; }
+            .toolbar { flex-direction: column; align-items: stretch; border-radius: 30px; }
+            .btn { justify-content: center; }
+            .question-card { padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        ⚖️ 民诉小测 · 随机模拟
+        <small>题库100题 · 每套25题</small>
+    </h1>
+
+    <div class="toolbar">
+        <span class="counter" id="counterDisplay">第 0 / 25 题</span>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn btn-primary" id="newSetBtn"> 随机抽题</button>
+            <button class="btn" id="checkBtn">✅ 批改答案</button>
+            <button class="btn" id="clearBtn">️ 清空作答</button>
+        </div>
+    </div>
+
+    <div id="quizContainer" class="quiz-list">
+        <!-- 动态渲染试题 -->
+    </div>
+
+    <div id="resultPanel" class="result-panel" style="display: none;">
+        <span> 本次得分</span>
+        <span class="score-badge" id="scoreDisplay">0 / 25</span>
+    </div>
+
+    <div class="footer-actions">
+        <button class="btn" id="scrollTopBtn" style="margin-right: auto;">⬆️ 回到顶部</button>
+    </div>
+</div>
+
+<script>
+    // ======================= 题库 (100道) =======================
+    // 填空题 (简单) 共50道   —— 类型 'fill'
+    // 选择题 (困难) 共50道   —— 类型 'choice'
+    // 严格依据民事诉讼法前六讲内容与附录法条，尽力覆盖基本知识与原理。
+    // 为方便维护，每题包含: id, type, question, options(选择题), answer, explanation(可选)
+    // 填空题answer为字符串数组(支持多种可接受答案), 选择题answer为选项索引(0-based)
+    // 选择题options为字符串数组
+
+    const questionBank = [
+        // ========== 填空题 1-50 ==========
+        { id: 1, type: 'fill', question: '民事诉讼法的三大核心关键词为：管辖权、诉讼标的和________。', answer: ['程序正义'] },
+        { id: 2, type: 'fill', question: '民事纠纷的特征包括主体的平等性和内容的________。', answer: ['私法性'] },
+        { id: 3, type: 'fill', question: '三种解纷方式包括自力救济、社会救济和________。', answer: ['公力救济'] },
+        { id: 4, type: 'fill', question: '民事诉讼作为公力救济，其核心在于限制地下私力秩序，并严格以________方式进行裁决。', answer: ['法律'] },
+        { id: 5, type: 'fill', question: '罗尔斯认为，司法程序本质上属于________的程序正义。', answer: ['不完善'] },
+        { id: 6, type: 'fill', question: '正当程序的法律要素包括参与、平等、公开、尊严和________。', answer: ['及时'] },
+        { id: 7, type: 'fill', question: '民事审判权的特征包括被动性、主体唯一性、对象特定性和________。', answer: ['程序合法性'] },
+        { id: 8, type: 'fill', question: '我国《民事诉讼法》第13条第2款规定，当事人有权在法律规定的范围内处分自己的民事权利和________权利。', answer: ['诉讼'] },
+        { id: 9, type: 'fill', question: '大陆法系约束性辩论原则的三要件中，法院对案件证据的调查原则上仅限于当事人双方在辩论中提出的________。', answer: ['证据'] },
+        { id: 10, type: 'fill', question: '处分原则针对权利，辩论原则针对________与证据。', answer: ['事实'] },
+        { id: 11, type: 'fill', question: '民事诉讼基本原则中，贯穿性是指原则贯穿民事诉讼________。', answer: ['全过程'] },
+        { id: 12, type: 'fill', question: '诚实信用原则法源为《民事诉讼法》第13条第________款。', answer: ['1', '一'] },
+        { id: 13, type: 'fill', question: '线上等效原则法源为第16条，强调经当事人同意，在线诉讼活动与线下诉讼具有________法律效力。', answer: ['同等'] },
+        { id: 14, type: 'fill', question: '人民法院是国家的________机关。', answer: ['审判'] },
+        { id: 15, type: 'fill', question: '合议庭的成员人数必须是________。', answer: ['单数'] },
+        { id: 16, type: 'fill', question: '独任制适用于基层人民法院审理的第一审简易程序案件和基本事实清楚、权利义务关系明确的________程序案件。', answer: ['普通'] },
+        { id: 17, type: 'fill', question: '司法责任制要求“审理者裁判，________”。', answer: ['裁判者负责'] },
+        { id: 18, type: 'fill', question: '公开审判制度中，宣判一律________。', answer: ['公开'] },
+        { id: 19, type: 'fill', question: '回避申请应当在案件开始审理时提出；回避事由在开庭后知道的，可以在________终结前提出。', answer: ['法庭辩论'] },
+        { id: 20, type: 'fill', question: '法院对回避申请应在________日内作出决定。', answer: ['3', '三'] },
+        { id: 21, type: 'fill', question: '法院主管是指法院受理民事诉讼的________范围。', answer: ['受案'] },
+        { id: 22, type: 'fill', question: '劳动争议仲裁实行“________”原则。', answer: ['先裁后审'] },
+        { id: 23, type: 'fill', question: '人民调解协议具有合同性质，可申请________确认。', answer: ['司法'] },
+        { id: 24, type: 'fill', question: '管辖恒定原则：管辖权的确定以原告起诉得到________时为准。', answer: ['受理'] },
+        { id: 25, type: 'fill', question: '中级法院管辖一审标的额：双方住所地均在同省的为________亿元以上。', answer: ['5', '五'] },
+        { id: 26, type: 'fill', question: '一般地域管辖实行“原告就________”原则。', answer: ['被告'] },
+        { id: 27, type: 'fill', question: '因合同纠纷提起的诉讼，由被告住所地或者________人民法院管辖。', answer: ['合同履行地'] },
+        { id: 28, type: 'fill', question: '因公司设立、确认股东资格、分配利润、解散等纠纷提起的诉讼，由________人民法院管辖。', answer: ['公司住所地'] },
+        { id: 29, type: 'fill', question: '因侵权行为提起的诉讼，由侵权行为地或者________人民法院管辖。', answer: ['被告住所地'] },
+        { id: 30, type: 'fill', question: '专属管辖中，因不动产纠纷提起的诉讼，由________人民法院管辖。', answer: ['不动产所在地'] },
+        { id: 31, type: 'fill', question: '协议管辖中，当事人可以书面协议选择与争议有________联系的地点的人民法院管辖。', answer: ['实际'] },
+        { id: 32, type: 'fill', question: '移送管辖中，受移送法院认为不属于本院管辖的，应报请________指定管辖。', answer: ['上级法院'] },
+        { id: 33, type: 'fill', question: '管辖权异议应当在提交________期间提出。', answer: ['答辩状'] },
+        { id: 34, type: 'fill', question: '应诉管辖又称默示协议管辖，当事人未提出管辖异议并应诉答辩或提出反诉的，视为受诉法院有管辖权，但违反级别管辖和________管辖规定的除外。', answer: ['专属'] },
+        { id: 35, type: 'fill', question: '民事诉讼中，辩论原则的主体是________。', answer: ['当事人'] },
+        { id: 36, type: 'fill', question: '民事诉讼法第12条规定，人民法院审理民事案件时，当事人有权进行________。', answer: ['辩论'] },
+        { id: 37, type: 'fill', question: '检察机关参与民事诉讼的基础在于________权。', answer: ['法律监督'] },
+        { id: 38, type: 'fill', question: '支持起诉原则法源为第________条。', answer: ['15', '十五'] },
+        { id: 39, type: 'fill', question: '当事人诉讼权利平等原则法源为第________条。', answer: ['8', '八'] },
+        { id: 40, type: 'fill', question: '处分原则法源为第13条第________款。', answer: ['2', '二'] },
+        { id: 41, type: 'fill', question: '回避制度中，审判人员由________决定是否回避。', answer: ['院长'] },
+        { id: 42, type: 'fill', question: '公开审判的不公开例外中，离婚案件和涉及________的案件，当事人申请不公开的，可以不公开审理。', answer: ['商业秘密'] },
+        { id: 43, type: 'fill', question: '司法公开四大平台包括裁判文书公开平台、庭审直播公开平台、审判流程信息公开平台和________公开平台。', answer: ['执行信息'] },
+        { id: 44, type: 'fill', question: '民事诉讼模式中，当事人主义又称________制。', answer: ['对抗'] },
+        { id: 45, type: 'fill', question: '我国《民事诉讼法》第12条辩论原则传统上对法院缺乏硬性________力。', answer: ['约束'] },
+        { id: 46, type: 'fill', question: '诉的要素中，诉讼标的关联诉讼主体与________。', answer: ['客体'] },
+        { id: 47, type: 'fill', question: '民事诉讼特征之一：结果具备法律上的________效力。', answer: ['强制执行'] },
+        { id: 48, type: 'fill', question: '审判权的内容包括程序控制权、实体裁判权和________权。', answer: ['调解'] },
+        { id: 49, type: 'fill', question: '民事诉讼中，基本诉权的保障映射罗尔斯正义论中的________原则。', answer: ['平等自由'] },
+        { id: 50, type: 'fill', question: '在线诉讼中，当事人同意的表达形式包括外观主义、一揽子授权和________授权。', answer: ['阶段'] },
+
+        // ========== 选择题 (困难) 51-100 ==========
+        { id: 51, type: 'choice', question: '关于民事纠纷解决机制，下列说法正确的是？', options: ['自力救济在现代社会已被完全禁止', '社会救济包括人民调解和仲裁，与公力救济有高下之分', '民事诉讼作为公力救济，核心在于限制地下私力秩序', '三种解纷方式长期并存但公力救济优先'], answer: 2, explanation: 'A错，自力救济并未完全禁止；B错，三者无高下之分；D错，无公力救济优先说法；C正确。' },
+        { id: 52, type: 'choice', question: '罗尔斯《正义论》中，关于程序正义的类型，下列说法正确的是？', options: ['完善的程序正义存在独立标准且保证达到', '不完善的程序正义缺乏独立标准', '纯粹的程序正义存在独立标准', '司法程序本质上属于纯粹的程序正义'], answer: 0, explanation: 'A正确；B错，不完善程序正义有独立标准但缺乏保证；C错，纯粹程序正义无独立标准；D错，罗尔斯认为司法程序本质属于不完善的程序正义。' },
+        { id: 53, type: 'choice', question: '关于民事审判权的特征，下列哪一项不属于？', options: ['被动性', '主体唯一性', '对象普遍性', '程序合法性'], answer: 2, explanation: '审判权具有对象特定性而非普遍性。' },
+        { id: 54, type: 'choice', question: '下列哪一项不属于正当程序的法律要素？', options: ['参与', '平等', '效率优先', '尊严'], answer: 2, explanation: '正当程序要素包括参与、平等、公开、尊严、及时，效率优先不是。' },
+        { id: 55, type: 'choice', question: '大陆法系约束性辩论原则的三要件不包括？', options: ['必要事实必须在辩论中出现', '无争议事实法院应作为裁判依据', '法院可依职权主动调查证据', '证据调查原则上限于当事人提出的证据'], answer: 2, explanation: '辩论主义三要件限制法院依职权调查证据，因此C不属于。' },
+        { id: 56, type: 'choice', question: '关于处分原则与辩论原则的区别，下列说法正确的是？', options: ['处分原则针对事实与证据，辩论原则针对权利', '处分原则体现私法自治，辩论原则涉及事实认定', '两者主体与法域相同', '处分原则不受诚信原则限制'], answer: 1, explanation: 'A反了；C错；D错，处分原则受诚信原则和国家干预限制。B正确。' },
+        { id: 57, type: 'choice', question: '关于审判组织，下列哪一选项是正确的？', options: ['简易程序必须由审判员一人独任审理', '基层法院审理的基本事实清楚的第一审普通程序案件，可以由审判员一人独任审理', '中级法院所有二审案件均可由审判员一人独任审理', '合议庭成员人数可以是双数'], answer: 1, explanation: 'A错，简易程序可以独任但非必须；C错，中级法院对一审简易程序审结或不服裁定上诉的二审案件，事实清楚、权利义务明确，经双方同意才可独任；D错，必须单数。' },
+        { id: 58, type: 'choice', question: '根据《民事诉讼法》第42条，下列哪类案件不得独任审理？', options: ['涉及群体性纠纷的案件', '基层法院简易程序案件', '双方同意独任的二审案件', '小额诉讼案件'], answer: 0, explanation: '第42条明确规定涉及群体性纠纷可能影响社会稳定的案件不得独任审理。' },
+        { id: 59, type: 'choice', question: '关于司法责任制和阅核制，下列哪一说法正确？', options: ['司法责任制要求“审理者裁判，裁判者负责”', '阅核制削弱了院庭长的审判监督权', '员额制是为了让所有法官都成为精英法官', '四类案件不包括可能与已有判决冲突的案件'], answer: 0, explanation: 'B错，阅核制强化监督；C错，员额制是保障少数精英法官；D错，四类案件包括可能与已有判决冲突。' },
+        { id: 60, type: 'choice', question: '关于回避制度，下列哪一说法正确？', options: ['回避申请只能口头提出', '法院应在5日内作出决定', '申请人可以申请复议一次', '复议期间被申请回避人员停止参与本案工作'], answer: 2, explanation: 'A错，可口头或书面；B错，3日内；D错，复议期间不停止工作。' },
+        { id: 61, type: 'choice', question: '关于法院主管，下列哪一说法正确？', options: ['商事仲裁实行先裁后审', '劳动争议仲裁实行或裁或审', '人民调解协议可申请司法确认', '行政关系属于法院民事主管范围'], answer: 2, explanation: 'A错，商事仲裁或裁或审；B错，劳动争议先裁后审；D错，行政关系排除。' },
+        { id: 62, type: 'choice', question: '关于管辖恒定原则，下列哪一情形不改变管辖？', options: ['当事人住所地变更', '行政区域调整', '诉讼标的额增加导致违反级别管辖', '当事人提起反诉'], answer: 1, explanation: 'B正确，行政区域调整不影响；A、D均不改变；C违反级别管辖除外。' },
+        { id: 63, type: 'choice', question: '根据《民事诉讼法》第35条，协议管辖不得违反？', options: ['级别管辖和专属管辖', '一般地域管辖', '特殊地域管辖', '指定管辖'], answer: 0, explanation: '法条明确规定不得违反级别管辖和专属管辖。' },
+        { id: 64, type: 'choice', question: '关于移送管辖，下列说法正确的是？', options: ['受移送法院认为无管辖权时，可自行移送其他法院', '受移送法院认为无管辖权时，应报请上级法院指定管辖', '移送管辖需经原告同意', '移送管辖只能发生在同级法院之间'], answer: 1, explanation: '根据第37条，受移送法院不得再自行移送，应报请上级指定。' },
+        { id: 65, type: 'choice', question: '关于管辖权异议，下列说法正确的是？', options: ['可在法庭辩论终结前提出', '异议成立的，法院裁定驳回起诉', '异议不成立的，法院裁定移送', '未提出异议并应诉答辩的，视为应诉管辖'], answer: 3, explanation: 'A错，应在提交答辩状期间；B、C反了；D正确。' },
+        { id: 66, type: 'choice', question: '下列哪一案件属于专属管辖？', options: ['合同纠纷', '侵权纠纷', '港口作业纠纷', '公司治理纠纷'], answer: 2, explanation: '第34条规定港口作业纠纷由港口所在地法院专属管辖。' },
+        { id: 67, type: 'choice', question: '涉外专属管辖不包括下列哪一项？', options: ['中外合资经营企业合同纠纷', '知识产权有效性审查纠纷', '法人设立、解散、清算纠纷', '涉外侵权纠纷'], answer: 3, explanation: '涉外侵权纠纷不属于第279条专属管辖范围。' },
+        { id: 68, type: 'choice', question: '关于支持起诉原则，下列说法正确的是？', options: ['仅机关可以支持起诉', '社会团体、企事业单位也可以支持起诉', '支持起诉者可以代替当事人起诉', '支持起诉原则仅适用于侵权案件'], answer: 1, explanation: '第15条规定机关、社会团体、企业事业单位均可支持。' },
+        { id: 69, type: 'choice', question: '关于检察监督原则，下列说法正确的是？', options: ['检察机关仅对审判活动进行监督', '检察机关仅对执行活动进行监督', '检察机关有权对民事诉讼实行法律监督', '检察监督需当事人申请'], answer: 2, explanation: '第14条规定人民检察院有权对民事诉讼实行法律监督。' },
+        { id: 70, type: 'choice', question: '关于诚实信用原则，下列说法错误的是？', options: ['2012年新增', '对当事人禁反言', '对法院赋予自由裁量权', '允许向一般条款逃逸'], answer: 3, explanation: '诚实信用原则应防范“向一般条款逃逸”。' },
+        { id: 71, type: 'choice', question: '关于线上等效原则，下列说法正确的是？', options: ['在线诉讼无需当事人同意', '在线诉讼与线下诉讼效力不同', '需当事人同意，且与线下诉讼有同等法律效力', '仅适用于简易程序'], answer: 2, explanation: '第16条规定经当事人同意，在线诉讼与线下诉讼具有同等法律效力。' },
+        { id: 72, type: 'choice', question: '关于法院体系，下列哪一法院不属于专门人民法院？', options: ['军事法院', '海事法院', '知识产权法院', '高级人民法院'], answer: 3, explanation: '高级人民法院属于地方人民法院。' },
+        { id: 73, type: 'choice', question: '关于审判权的内容，下列哪一项不属于？', options: ['程序控制权', '实体裁判权', '调解权', '侦查权'], answer: 3, explanation: '侦查权属于公安/检察机关，不是民事审判权。' },
+        { id: 74, type: 'choice', question: '关于公开审判制度，下列说法正确的是？', options: ['所有案件一律公开审理', '宣判一律公开', '离婚案件一律不公开', '涉及商业秘密的案件必须不公开'], answer: 1, explanation: 'A错，有例外；C、D错，离婚和商业秘密是申请不公开。' },
+        { id: 75, type: 'choice', question: '关于合议制，下列说法正确的是？', options: ['第一审普通程序必须由审判员和陪审员共同组成合议庭', '第二审案件原则上由审判员组成合议庭', '合议庭人数可以是双数', '独任转合议只能由法院依职权进行'], answer: 1, explanation: 'A错，可以全部由审判员组成；C错必须单数；D错，当事人也可提出异议。' },
+        { id: 76, type: 'choice', question: '关于管辖分类，以诉讼管辖权归属数量为标准的是？', options: ['法定管辖、裁定管辖、协议管辖', '共同管辖、选择管辖、合并管辖', '级别管辖、地域管辖、专属管辖', '移送管辖、指定管辖、管辖权转移'], answer: 1, explanation: '按归属数量分为共同管辖、选择管辖、合并管辖。' },
+        { id: 77, type: 'choice', question: '合同纠纷中，若合同对履行地点没有约定，争议标的为给付货币的，合同履行地是？', options: ['给付货币一方所在地', '接收货币一方所在地', '合同签订地', '被告住所地'], answer: 1, explanation: '《民诉解释》第18条：接收货币一方所在地为合同履行地。' },
+        { id: 78, type: 'choice', question: '关于侵权纠纷管辖，下列哪一连接点不正确？', options: ['侵权行为发生地', '侵权结果地', '被告住所地', '原告住所地'], answer: 3, explanation: '侵权纠纷由侵权行为地或被告住所地管辖，原告住所地一般不是法定连接点。' },
+        { id: 79, type: 'choice', question: '关于公司治理纠纷管辖，下列说法正确的是？', options: ['由公司住所地法院管辖', '由被告住所地法院管辖', '由原告住所地法院管辖', '由合同履行地法院管辖'], answer: 0, explanation: '第27条规定由公司住所地人民法院管辖。' },
+        { id: 80, type: 'choice', question: '关于特殊地域管辖，运输合同纠纷的法定连接点不包括？', options: ['运输始发地', '目的地', '被告住所地', '合同签订地'], answer: 3, explanation: '第28条规定运输始发地、目的地或被告住所地，不含合同签订地。' },
+        { id: 81, type: 'choice', question: '关于一般地域管辖的例外，下列哪类诉讼由原告住所地管辖？', options: ['对下落不明的人提起的财产纠纷', '对被监禁的人提起的诉讼', '对法人提起的合同纠纷', '对不在境内居住的人提起的财产纠纷'], answer: 1, explanation: '第23条规定对不在境内居住的人提起的身份关系诉讼、对下落不明/宣告失踪的人提起的身份关系诉讼、对被采取强制性教育措施或被监禁的人提起的诉讼，由原告住所地管辖。B正确。' },
+        { id: 82, type: 'choice', question: '关于指定管辖，下列说法正确的是？', options: ['仅适用于法院之间管辖权争议协商不成', '仅适用于有管辖权法院因特殊原因无法行使', '包括上述两种情形', '需当事人申请'], answer: 2, explanation: '第38条规定两种情形：特殊原因无法行使、争议协商不成。' },
+        { id: 83, type: 'choice', question: '关于管辖权转移，下列说法正确的是？', options: ['上级法院可随意审理下级法院管辖的案件', '下放需报请更高一级法院批准', '下级法院可自行决定报请上级审理', '管辖权转移仅限上级提审'], answer: 1, explanation: 'A错，上级提审有权但下放需批准；C错，需报请；D错，包括双向。' },
+        { id: 84, type: 'choice', question: '关于级别管辖，高级人民法院管辖一审标的额为多少以上？', options: ['5亿元', '10亿元', '50亿元', '100亿元'], answer: 2, explanation: '法发〔2019〕14号规定高级法院管辖一审标的额50亿元以上。' },
+        { id: 85, type: 'choice', question: '民事诉讼中，当事人的处分权受到哪些限制？', options: ['仅受诚信原则限制', '仅受国家公权力必要干预限制', '受诚信原则和国家公权力必要干预限制', '不受限制'], answer: 2, explanation: '处分原则受诚信原则和国家公权力必要干预的限制。' },
+        { id: 86, type: 'choice', question: '关于辩论原则，下列说法正确的是？', options: ['辩论原则仅适用于法庭辩论阶段', '辩论原则仅针对实体问题', '辩论原则贯穿诉讼全过程', '辩论原则对法院有硬性约束力'], answer: 2, explanation: 'A错，贯穿全过程；B错，涵盖实体与程序；D错，传统上缺乏硬性约束力。' },
+        { id: 87, type: 'choice', question: '关于民事诉讼基本原则的功能，下列说法错误的是？', options: ['指导具体规则的适用', '填补法律漏洞', '为司法改革提供合法性依据', '直接作为裁判依据'], answer: 3, explanation: '基本原则一般不直接作为裁判依据，需通过具体规则。' },
+        { id: 88, type: 'choice', question: '下列哪一原则属于民事诉讼特有原则？', options: ['独立审判原则', '公开审判原则', '处分原则', '以事实为根据以法律为准绳原则'], answer: 2, explanation: '处分原则是民事诉讼特有原则。' },
+        { id: 89, type: 'choice', question: '关于审判管理，下列说法正确的是？', options: ['属于行政化调控', '不属于诉讼流程节点监控', '与司法责任制无关', '仅由合议庭进行'], answer: 0, explanation: '审判管理是对诉讼流程节点的督促、监控与行政化调控。' },
+        { id: 90, type: 'choice', question: '关于四类案件监督，下列哪项不属于四类案件？', options: ['群体性纠纷', '疑难复杂', '可能与已有判决冲突', '当事人申请再审的案件'], answer: 3, explanation: '四类案件包括群体性纠纷、疑难复杂、可能与已有判决冲突、反映法官违纪。' },
+        { id: 91, type: 'choice', question: '关于回避的决定权限，下列说法正确的是？', options: ['院长担任审判长时由审判委员会决定', '审判人员由审判长决定', '书记员由院长决定', '鉴定人由审判委员会决定'], answer: 0, explanation: 'B错，审判人员由院长决定；C错，其他人员由审判长/独任法官决定；D错，鉴定人由审判长决定。' },
+        { id: 92, type: 'choice', question: '关于管辖恒定原则的适用情形，下列哪一情形会导致管辖改变？', options: ['当事人住所地变更', '行政区域调整', '诉讼标的额增加违反级别管辖', '当事人提起反诉'], answer: 2, explanation: '违反级别管辖和专属管辖的除外，因此C会导致改变。' },
+        { id: 93, type: 'choice', question: '关于合同纠纷管辖，若合同未约定履行地且争议标的为交付不动产，履行地是？', options: ['不动产所在地', '被告住所地', '原告住所地', '合同签订地'], answer: 0, explanation: '《民诉解释》第18条：交付不动产的，不动产所在地为合同履行地。' },
+        { id: 94, type: 'choice', question: '关于保险合同纠纷管辖，下列哪一连接点正确？', options: ['仅被告住所地', '仅保险标的物所在地', '被告住所地或保险标的物所在地', '合同签订地'], answer: 2, explanation: '第25条规定被告住所地或保险标的物所在地。' },
+        { id: 95, type: 'choice', question: '关于涉外牵连管辖，下列哪一连接点不属于第276条规定？', options: ['合同签订地', '合同履行地', '原告住所地', '可供扣押财产所在地'], answer: 2, explanation: '第276条列举中没有原告住所地。' },
+        { id: 96, type: 'choice', question: '关于应诉管辖，下列说法正确的是？', options: ['仅适用于涉外案件', '未提出管辖异议并应诉答辩或提出反诉即视为有管辖权', '违反专属管辖的也适用', '需法院主动审查'], answer: 1, explanation: 'A错，国内也适用；C错，违反级别和专属管辖的除外；D错，需当事人未提异议。' },
+        { id: 97, type: 'choice', question: '关于民事审判权的被动性，下列说法正确的是？', options: ['法院可主动审理民事案件', '不告不理', '法院可主动追加当事人', '法院可主动调查证据'], answer: 1, explanation: '被动性即不告不理。' },
+        { id: 98, type: 'choice', question: '关于释明权，下列说法正确的是？', options: ['属于实体裁判权', '属于程序控制权/指挥权', '属于调解权', '不属于审判权内容'], answer: 1, explanation: '释明权属于程序控制权/指挥权。' },
+        { id: 99, type: 'choice', question: '关于诉讼模式，职权主义的特点不包括？', options: ['法院主导', '强调职权干预', '追求实体真实', '当事人完全主导'], answer: 3, explanation: '当事人完全主导是当事人主义的特点。' },
+        { id: 100, type: 'choice', question: '关于民事诉讼的价值，下列说法正确的是？', options: ['民事诉讼是各种解纷程序的原始形态', '民事诉讼不是公共政策的终极作用场所', '程序正义不重要', '实体正义优先于程序正义'], answer: 0, explanation: '笔记指出民事诉讼是各种解纷程序的原始形态，也是公共政策的终极作用场所。' }
+    ];
+
+    // ========== 全局变量 ==========
+    let currentQuestions = [];          // 当前试卷题目（25道）
+    let userAnswers = [];              // 用户答案: 填空存字符串, 选择存索引(-1表示未选)
+    let questionStatus = [];           // 'unchecked' / 'correct' / 'wrong' / 'partial'
+
+    // DOM 元素
+    const quizContainer = document.getElementById('quizContainer');
+    const counterDisplay = document.getElementById('counterDisplay');
+    const newSetBtn = document.getElementById('newSetBtn');
+    const checkBtn = document.getElementById('checkBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const resultPanel = document.getElementById('resultPanel');
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+    // ========== 工具函数 ==========
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    // 从题库随机抽取25题，尽量保持填空与选择比例均衡（约12/13）
+    function generateRandomSet() {
+        // 分别取出填空题和选择题
+        const fillQuestions = questionBank.filter(q => q.type === 'fill');
+        const choiceQuestions = questionBank.filter(q => q.type === 'choice');
+
+        // 打乱
+        shuffleArray(fillQuestions);
+        shuffleArray(choiceQuestions);
+
+        // 按比例抽取：填空题12道，选择题13道 (共25)  也可随机，但保持比例
+        const selectedFill = fillQuestions.slice(0, 12);
+        const selectedChoice = choiceQuestions.slice(0, 13);
+
+        // 合并并打乱顺序
+        let combined = [...selectedFill, ...selectedChoice];
+        combined = shuffleArray(combined);
+        return combined;
+    }
+
+    // 初始化/重置试卷
+    function loadNewSet() {
+        currentQuestions = generateRandomSet();
+        userAnswers = new Array(currentQuestions.length).fill(null).map((_, idx) => {
+            return currentQuestions[idx].type === 'fill' ? '' : -1;
+        });
+        questionStatus = new Array(currentQuestions.length).fill('unchecked');
+        renderQuestions();
+        updateCounter();
+        resultPanel.style.display = 'none';
+    }
+
+    // 更新计数器
+    function updateCounter() {
+        const total = currentQuestions.length;
+        let answered = 0;
+        for (let i = 0; i < total; i++) {
+            if (currentQuestions[i].type === 'fill') {
+                if (userAnswers[i] && userAnswers[i].trim() !== '') answered++;
+            } else {
+                if (userAnswers[i] !== -1) answered++;
+            }
+        }
+        counterDisplay.textContent = `已答 ${answered} / ${total} 题`;
+    }
+
+    // 渲染所有题目
+    function renderQuestions() {
+        if (!currentQuestions.length) {
+            quizContainer.innerHTML = `<div class="empty-msg"> 题库加载异常，请刷新页面</div>`;
+            return;
+        }
+
+        let html = '';
+        currentQuestions.forEach((q, index) => {
+            const typeLabel = q.type === 'fill' ? '填空题' : '选择题';
+            const qNum = index + 1;
+            const userAns = userAnswers[index];
+            const status = questionStatus[index];
+
+            // 题干
+            let questionHtml = `<div class="question-card" data-index="${index}">
+                <div class="question-header">
+                    <span class="q-num">${qNum}</span>
+                    <span class="q-type">${typeLabel}</span>
+                </div>
+                <div class="q-text">${q.question}</div>`;
+
+            // 根据类型渲染交互区域
+            if (q.type === 'fill') {
+                const val = userAns || '';
+                questionHtml += `<input type="text" class="fill-input" data-index="${index}" value="${escapeHtml(val)}" placeholder="请输入答案..." oninput="handleFillInput(this)">`;
+            } else {
+                // 选择题渲染选项
+                questionHtml += `<div class="options">`;
+                q.options.forEach((opt, optIdx) => {
+                    const checked = (userAns === optIdx) ? 'checked' : '';
+                    questionHtml += `<div class="option-item" onclick="selectOption(${index}, ${optIdx})">
+                        <input type="radio" name="q${index}" value="${optIdx}" ${checked} onclick="event.stopPropagation(); selectOption(${index}, ${optIdx});">
+                        <label>${String.fromCharCode(65 + optIdx)}. ${opt}</label>
+                    </div>`;
+                });
+                questionHtml += `</div>`;
+            }
+
+            // 反馈信息区域（批改后显示）
+            questionHtml += `<div class="answer-feedback" id="feedback-${index}"></div>`;
+            questionHtml += `</div>`;
+
+            html += questionHtml;
+        });
+
+        quizContainer.innerHTML = html;
+
+        // 绑定填空输入事件 (通过oninput已绑定，但也可以再统一绑定)
+        document.querySelectorAll('.fill-input').forEach(input => {
+            input.addEventListener('input', function(e) {
+                const idx = parseInt(this.dataset.index);
+                userAnswers[idx] = this.value;
+                updateCounter();
+                // 若之前有批改状态，清除反馈
+                if (questionStatus[idx] !== 'unchecked') {
+                    questionStatus[idx] = 'unchecked';
+                    const fb = document.getElementById(`feedback-${idx}`);
+                    if (fb) { fb.style.display = 'none'; fb.className = 'answer-feedback'; }
+                }
+            });
+        });
+    }
+
+    // 处理填空输入
+    window.handleFillInput = function(input) {
+        const idx = parseInt(input.dataset.index);
+        userAnswers[idx] = input.value;
+        updateCounter();
+        if (questionStatus[idx] !== 'unchecked') {
+            questionStatus[idx] = 'unchecked';
+            const fb = document.getElementById(`feedback-${idx}`);
+            if (fb) { fb.style.display = 'none'; fb.className = 'answer-feedback'; }
+        }
+    };
+
+    // 选择选项
+    window.selectOption = function(index, optIdx) {
+        userAnswers[index] = optIdx;
+        // 更新UI选中状态
+        const container = document.querySelector(`.question-card[data-index="${index}"]`);
+        if (container) {
+            const radios = container.querySelectorAll('input[type="radio"]');
+            radios.forEach((radio, i) => {
+                if (i === optIdx) radio.checked = true;
+                else radio.checked = false;
+            });
+        }
+        updateCounter();
+        if (questionStatus[index] !== 'unchecked') {
+            questionStatus[index] = 'unchecked';
+            const fb = document.getElementById(`feedback-${index}`);
+            if (fb) { fb.style.display = 'none'; fb.className = 'answer-feedback'; }
+        }
+    };
+
+    // 简单转义HTML
+    function escapeHtml(text) {
+        if (!text) return '';
+        return text.replace(/[&<>"]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            if (m === '"') return '&quot;';
+            return m;
+        });
+    }
+
+    // 批改
+    function checkAnswers() {
+        let score = 0;
+        const total = currentQuestions.length;
+
+        currentQuestions.forEach((q, index) => {
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            if (!feedbackDiv) return;
+
+            const userAns = userAnswers[index];
+            let isCorrect = false;
+            let correctAnswerStr = '';
+
+            if (q.type === 'fill') {
+                const trimmed = (userAns || '').trim();
+                // 填空题答案支持数组，不区分大小写和首尾空格
+                const acceptAnswers = q.answer.map(a => a.toString().toLowerCase().trim());
+                isCorrect = acceptAnswers.includes(trimmed.toLowerCase());
+                correctAnswerStr = q.answer.join(' 或 ');
+                if (isCorrect) {
+                    feedbackDiv.className = 'answer-feedback correct';
+                    feedbackDiv.innerHTML = `<span class="feedback-text">✅ 正确！</span>`;
+                    score++;
+                } else {
+                    feedbackDiv.className = 'answer-feedback wrong';
+                    feedbackDiv.innerHTML = `<span class="feedback-text">❌ 错误。参考答案：</span><span class="correct-answer">${correctAnswerStr}</span>`;
+                }
+            } else {
+                // 选择题
+                if (userAns === -1) {
+                    feedbackDiv.className = 'answer-feedback neutral';
+                    feedbackDiv.innerHTML = `<span class="feedback-text">⚠️ 未作答。正确答案：</span><span class="correct-answer">${String.fromCharCode(65 + q.answer)}</span>`;
+                    isCorrect = false;
+                } else if (userAns === q.answer) {
+                    feedbackDiv.className = 'answer-feedback correct';
+                    feedbackDiv.innerHTML = `<span class="feedback-text">✅ 正确！</span>`;
+                    isCorrect = true;
+                    score++;
+                } else {
+                    feedbackDiv.className = 'answer-feedback wrong';
+                    feedbackDiv.innerHTML = `<span class="feedback-text">❌ 错误。正确答案：</span><span class="correct-answer">${String.fromCharCode(65 + q.answer)}</span>`;
+                }
+            }
+
+            if (q.explanation && !isCorrect) {
+                feedbackDiv.innerHTML += `<div style="margin-top:6px;font-size:0.85rem;color:#4b5b6b;"> ${q.explanation}</div>`;
+            } else if (q.explanation && isCorrect) {
+                // 可选展示解析
+            }
+            questionStatus[index] = isCorrect ? 'correct' : 'wrong';
+        });
+
+        // 显示总分
+        resultPanel.style.display = 'flex';
+        scoreDisplay.textContent = `${score} / ${total}`;
+        updateCounter();
+    }
+
+    // 清空作答
+    function clearAnswers() {
+        userAnswers = currentQuestions.map((q) => {
+            return q.type === 'fill' ? '' : -1;
+        });
+        questionStatus = new Array(currentQuestions.length).fill('unchecked');
+
+        // 重新渲染
+        renderQuestions();
+        updateCounter();
+        resultPanel.style.display = 'none';
+        // 清除所有反馈
+        document.querySelectorAll('.answer-feedback').forEach(el => {
+            el.style.display = 'none';
+            el.className = 'answer-feedback';
+        });
+    }
+
+    // 滚动到顶部
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 事件绑定
+    newSetBtn.addEventListener('click', () => {
+        loadNewSet();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    checkBtn.addEventListener('click', checkAnswers);
+
+    clearBtn.addEventListener('click', clearAnswers);
+
+    scrollTopBtn.addEventListener('click', scrollToTop);
+
+    // 初始化
+    window.addEventListener('DOMContentLoaded', () => {
+        loadNewSet();
+    });
+
+</script>
+</body>
+</html>
+
